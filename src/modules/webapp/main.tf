@@ -1,24 +1,33 @@
-resource "azurerm_resource_group" "rfid-rg" {
-  name     = "rfid-rg"
-  location = var.location
-}
-
 resource "azurerm_app_service_plan" "webapp-linux" {
-  name                = var.service_plan_name
+  for_each            = var.apps
+  name                = each.value.service_plan_name
+  resource_group_name = each.value.rg_group_name
   location            = var.location
-  resource_group_name = azurerm_resource_group.rfid-rg.name
   kind                = "Linux"
   reserved            = true
 
   sku {
-    tier = "Free"
-    size = "F1"
+    tier = "Basic"
+    size = "B1"
   }
 }
 
-resource "azurerm_app_service" "docker-api" {
-  name                = "${var.webapp_name}-api"
+resource "azurerm_application_insights" "insights-api" {
+  for_each            = var.apps
+  name                = each.value.app_insights_name
+  resource_group_name = each.value.rg_group_name
   location            = var.location
-  resource_group_name = azurerm_resource_group.rfid-rg.name
-  app_service_plan_id = azurerm_app_service_plan.webapp-linux.id
+  application_type    = "web"
+}
+
+resource "azurerm_app_service" "docker-api" {
+  for_each            = var.apps
+  name                = each.value.webapp_name
+  resource_group_name = each.value.rg_group_name
+  location            = var.location
+  app_service_plan_id = azurerm_app_service_plan.webapp-linux[each.key].id
+
+  app_settings = {
+    "APPINSIGHTS_INSTRUMENTATIONKEY" = azurerm_application_insights.insights-api[each.key].instrumentation_key
+  }
 }
