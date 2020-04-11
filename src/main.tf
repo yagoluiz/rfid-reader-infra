@@ -2,10 +2,27 @@ module "rfid-global" {
   source = "./modules/global"
 }
 
+module "rfid-sql-database" {
+  source = "./modules/databases/sql"
+
+  rg_group_name = module.rfid-global.resource_group_rfid_name
+  server_name   = "rfidserver001-sql"
+  database_name = "assetdb"
+}
+
+module "rfid-cosmos-database" {
+  source = "./modules/databases/cosmos"
+
+  rg_group_name = module.rfid-global.resource_group_rfid_name
+  server_name   = "rfidcosmos001"
+  database_name = "Rfid"
+}
+
 module "rfid-func" {
   source = "./modules/functions"
 
   rg_group_name                     = module.rfid-global.resource_group_rfid_name
+  service_plan_name                 = "EastUSPlan"
   app_insights_name                 = "rfid-func"
   func_name                         = "rfid-func"
   storage_primary_connection_string = module.rfid-global.storage_primary_connection_string
