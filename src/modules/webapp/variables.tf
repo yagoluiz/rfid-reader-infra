@@ -1,5 +1,5 @@
 variable "location" {
-  default = "eastus"
+  default = "eastus2"
 }
 
 variable "apps" {
