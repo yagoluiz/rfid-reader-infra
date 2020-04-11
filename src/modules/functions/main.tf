@@ -1,5 +1,5 @@
 resource "azurerm_app_service_plan" "func-plan" {
-  name                = "EastUSPlan"
+  name                = var.service_plan_name
   resource_group_name = var.rg_group_name
   location            = var.location
   kind                = "FunctionApp"

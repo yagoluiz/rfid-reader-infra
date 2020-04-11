@@ -4,6 +4,8 @@ variable "location" {
 
 variable "rg_group_name" {}
 
+variable "service_plan_name" {}
+
 variable "app_insights_name" {}
 
 variable "func_name" {}
