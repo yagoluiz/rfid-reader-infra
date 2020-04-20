@@ -2,6 +2,21 @@ module "rfid-global" {
   source = "./modules/global"
 }
 
+module "rfid-messaging" {
+  source = "./modules/messaging"
+
+  rg_group_name   = module.rfid-global.resource_group_rfid_name
+  servicebus_name = "rfid-service-bus"
+  queue_name      = "read-tags"
+}
+
+module "rfid-registry" {
+  source = "./modules/container"
+
+  rg_group_name = module.rfid-global.resource_group_rfid_name
+  acr_name      = "rfidregistry001"
+}
+
 module "rfid-sql-database" {
   source = "./modules/databases/sql"
 
