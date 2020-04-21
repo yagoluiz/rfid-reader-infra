@@ -23,7 +23,7 @@ resource "azurerm_function_app" "func-app" {
   storage_connection_string = var.storage_primary_connection_string
   location                  = var.location
   app_service_plan_id       = azurerm_app_service_plan.func-plan.id
-  version                   = "~3"
+  version                   = "~2"
 
   app_settings = {
     FUNCTIONS_WORKER_RUNTIME  = "dotnet"

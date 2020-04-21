@@ -5,7 +5,7 @@ resource "azurerm_servicebus_namespace" "servicebus-namespace" {
   sku                 = "Standard"
 }
 
-resource "azurerm_servicebus_queue" "servicebus-read-queue" {
+resource "azurerm_servicebus_queue" "servicebus-queue" {
   name                  = var.queue_name
   resource_group_name   = var.rg_group_name
   namespace_name        = azurerm_servicebus_namespace.servicebus-namespace.name
