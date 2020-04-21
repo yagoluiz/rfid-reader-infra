@@ -1,4 +1,4 @@
-resource "azurerm_container_registry" "acr-apis" {
+resource "azurerm_container_registry" "acr" {
   name                = var.acr_name
   resource_group_name = var.rg_group_name
   location            = var.location

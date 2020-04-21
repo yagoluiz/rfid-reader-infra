@@ -15,9 +15,9 @@ resource "azurerm_iothub" "iothub" {
   }
 
   endpoint {
-    type              = "AzureIotHub.StorageContainer"
     connection_string = var.storage_primary_connection_string
     container_name    = azurerm_storage_container.iothub-container.name
+    type              = "AzureIotHub.StorageContainer"
     name              = "export"
   }
 
@@ -33,6 +33,6 @@ resource "azurerm_iothub" "iothub" {
 resource "azurerm_iothub_consumer_group" "iothub-consumer" {
   name                   = var.iothub_consumer_name
   resource_group_name    = var.rg_group_name
-  eventhub_endpoint_name = "events"
   iothub_name            = azurerm_iothub.iothub.name
+  eventhub_endpoint_name = "events"
 }
