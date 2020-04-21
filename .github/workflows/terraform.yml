@@ -2,6 +2,10 @@ name: 'Terraform CI'
 
 on: [push]
 
+env:
+  tf_version: 'latest'
+  tf_working_dir: './src/'
+
 jobs:
   terraform:
     name: 'Terraform'
@@ -14,7 +18,7 @@ jobs:
         uses: hashicorp/terraform-github-actions@master
         with:
           tf_actions_working_dir: ${{ env.tf_working_dir }}
-          tf_actions_version: 0.12.13
+          tf_actions_version: ${{ env.tf_version }}
           tf_actions_subcommand: 'fmt'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -23,7 +27,7 @@ jobs:
         uses: hashicorp/terraform-github-actions@master
         with:
           tf_actions_working_dir: ${{ env.tf_working_dir }}
-          tf_actions_version: 0.12.13
+          tf_actions_version: ${{ env.tf_version }}
           tf_actions_subcommand: 'init'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -32,7 +36,7 @@ jobs:
         uses: hashicorp/terraform-github-actions@master
         with:
           tf_actions_working_dir: ${{ env.tf_working_dir }}
-          tf_actions_version: 0.12.13
+          tf_actions_version: ${{ env.tf_version }}
           tf_actions_subcommand: 'validate'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -41,7 +45,7 @@ jobs:
         uses: hashicorp/terraform-github-actions@master
         with:
           tf_actions_working_dir: ${{ env.tf_working_dir }}
-          tf_actions_version: 0.12.13
+          tf_actions_version: ${{ env.tf_version }}
           tf_actions_subcommand: 'plan'
           args: '-var="subscription_id=${{ secrets.AZURE_SUBSCRIPTION_ID }}" -var="client_id=${{ secrets.AZURE_CLIENT_ID }}" -var="client_secret=${{ secrets.AZURE_CLIENT_SECRET }}" -var="tenant_id=${{ secrets.AZURE_TENANT_ID }}"'
         env:
@@ -51,7 +55,7 @@ jobs:
         uses: hashicorp/terraform-github-actions@master
         with:
           tf_actions_working_dir: ${{ env.tf_working_dir }}
-          tf_actions_version: 0.12.13
+          tf_actions_version: ${{ env.tf_version }}
           tf_actions_subcommand: 'destroy'
           args: '-var="subscription_id=${{ secrets.AZURE_SUBSCRIPTION_ID }}" -var="client_id=${{ secrets.AZURE_CLIENT_ID }}" -var="client_secret=${{ secrets.AZURE_CLIENT_SECRET }}" -var="tenant_id=${{ secrets.AZURE_TENANT_ID }}"'
         env:
