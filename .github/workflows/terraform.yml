@@ -53,5 +53,6 @@ jobs:
           tf_actions_working_dir: ./src/
           tf_actions_version: 0.12.13
           tf_actions_subcommand: 'destroy'
+          args: '-var="subscription_id=${{ secrets.AZURE_SUBSCRIPTION_ID }}" -var="client_id=${{ secrets.AZURE_CLIENT_ID }}" -var="client_secret=${{ secrets.AZURE_CLIENT_SECRET }}" -var="tenant_id=${{ secrets.AZURE_TENANT_ID }}"'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
