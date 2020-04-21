@@ -21,3 +21,7 @@ output "acr_admin_username" {
 output "acr_admin_password" {
   value = module.rfid-registry.acr_admin_password
 }
+
+output "iothub_shared_access_policy" {
+  value = module.rfid-iot.iothub_shared_access_policy
+}

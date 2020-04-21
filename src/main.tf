@@ -1,5 +1,19 @@
 module "rfid-global" {
   source = "./modules/global"
+
+  rg_group_name = "rfid-rg"
+  storage_name  = "rfidstorage001"
+}
+
+module "rfid-iot" {
+  source = "./modules/iot"
+
+  rg_group_name                     = module.rfid-global.resource_group_rfid_name
+  container_name                    = "iot"
+  storage_account_name              = module.rfid-global.storage_name
+  storage_primary_connection_string = module.rfid-global.storage_primary_connection_string
+  iothub_name                       = "rfid-iot-hub"
+  iothub_consumer_name              = "Default"
 }
 
 module "rfid-messaging" {
