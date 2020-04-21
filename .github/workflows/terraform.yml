@@ -14,7 +14,7 @@ jobs:
       - name: 'Terraform Format'
         uses: hashicorp/terraform-github-actions@master
         with:
-          path: ./src/
+          tf_actions_working_dir: ./src/
           tf_actions_version: 0.12.13
           tf_actions_subcommand: 'fmt'
         env:
@@ -22,7 +22,7 @@ jobs:
       - name: 'Terraform Init'
         uses: hashicorp/terraform-github-actions@master
         with:
-          path: ./src/
+          tf_actions_working_dir: ./src/
           tf_actions_version: 0.12.13
           tf_actions_subcommand: 'init'
         env:
@@ -30,7 +30,7 @@ jobs:
       - name: 'Terraform Validate'
         uses: hashicorp/terraform-github-actions@master
         with:
-          path: ./src/
+          tf_actions_working_dir: ./src/
           tf_actions_version: 0.12.13
           tf_actions_subcommand: 'validate'
         env:
@@ -38,7 +38,7 @@ jobs:
       - name: 'Terraform Plan'
         uses: hashicorp/terraform-github-actions@master
         with:
-          path: ./src/
+          tf_actions_working_dir: ./src/
           tf_actions_version: 0.12.13
           tf_actions_subcommand: 'plan'
         env:
@@ -46,7 +46,7 @@ jobs:
       - name: 'Terraform Destroy'
         uses: hashicorp/terraform-github-actions@master
         with:
-          path: ./src/
+          tf_actions_working_dir: ./src/
           tf_actions_version: 0.12.13
           tf_actions_subcommand: 'destroy'
         env:
