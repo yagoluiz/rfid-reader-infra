@@ -1,5 +1,7 @@
 # Infrastructure RFID Tag Reading
 
+![Terraform CI](https://github.com/yagoluiz/rfid-reader-infra/workflows/Terraform%20CI/badge.svg)
+
 Infrastructure RFID Tag Reading, implemented after Master's Work.
 
 ## Project architecture
@@ -10,7 +12,7 @@ This repository provides the implementation of infrastructure of the projects [r
 
 ## Project structure
 
-The infrastructure was organized through [modules](https://www.terraform.io/docs/configuration/modules.html). Where each module represents a context within the infrastructure.
+The infrastructure was organized through [modules](https://www.terraform.io/docs/configuration/modules.html).
 
 ```
 ├── src
@@ -22,6 +24,7 @@ The infrastructure was organized through [modules](https://www.terraform.io/docs
     ├── main.tf (execute modules)
     ├── outputs.tf (connections)
     ├── provider.tf (Azure)
+...
 ```
 
 ## Master's work
@@ -31,6 +34,7 @@ See the work [repository](https://github.com/yagoluiz/unb-dissertacao) for more 
 ## Technologies
 
 - Terraform (Azure Provider)
+- Azure CLI
 
 ## Instructions for run project
 
@@ -42,7 +46,43 @@ See the work [repository](https://github.com/yagoluiz/unb-dissertacao) for more 
 
 > *az login*
 
-4. In path **src** in project root, execute commands Terraform
+4. *(Optional)* Create *service principal* credentials for Azure authentication
+
+> *az ad sp create-for-rbac --name "{NAME}" --role contributor --scopes /subscriptions/{YOUR_AZURE_SUBSCRIPTION_ID}*
+
+Result create service principal:
+
+```json
+{ 
+  "clientId": "{AZURE_CLIENT_ID}",
+  "clientSecret": "{AZURE_CLIENT_SECRET}",
+  "subscriptionId": "{AZURE_SUBSCRIPTION_ID}",
+  "tenantId": "{AZURE_TENANT_ID}",
+  "activeDirectoryEndpointUrl": "https://login.microsoftonline.com",
+  "resourceManagerEndpointUrl": "https://management.azure.com/",
+  "activeDirectoryGraphResourceId": "https://graph.windows.net/",
+  "sqlManagementEndpointUrl": "https://management.core.windows.net:8443/",
+  "galleryEndpointUrl": "https://gallery.azure.com/",
+  "managementEndpointUrl": "https://management.core.windows.net/"
+}
+```
+
+Use variables **clientId**, **clientSecret**, **subscriptionId** and **tenantId** in provider:
+
+```terraform
+provider "azurerm" {
+  version         = ">= 2.0.0"
+  subscription_id = var.subscription_id
+  client_id       = var.client_id
+  client_secret   = var.client_secret
+  tenant_id       = var.tenant_id
+  features {}
+}
+```
+
+In this project the variables are in **GitHub Secrets**.
+
+5. In path **src** in project root execute desired the commands Terraform
 
 > *terraform init* **(install modules and provider)**
 
@@ -51,6 +91,8 @@ See the work [repository](https://github.com/yagoluiz/unb-dissertacao) for more 
 > *terraform apply* **(apply infrastructure)**
 
 > *terraform destroy* **(remove infrastructure)**
+
+More [commands](https://www.terraform.io/docs/commands/index.html).
 
 # [PT-BR] Infraestrutura de Leitura de Tags RFID
 
@@ -62,7 +104,7 @@ Este repositório apresenta a implementação de toda infraestrutura dos projeto
 
 ## Estrutura do projeto
 
-A infraestrutura foi organizada através de [módulos](https://www.terraform.io/docs/configuration/modules.html). Onde cada módulo representa um contexto dentro da infraestrutura.
+A infraestrutura foi organizada através de [módulos](https://www.terraform.io/docs/configuration/modules.html).
 
 ```
 ├── src
@@ -74,6 +116,7 @@ A infraestrutura foi organizada através de [módulos](https://www.terraform.io/
     ├── main.tf (executar módulos)
     ├── outputs.tf (conexões)
     ├── provider.tf (Azure)
+...
 ```
 
 ## Trabalho de Mestrado
@@ -83,6 +126,7 @@ Consulte o [repositório](https://github.com/yagoluiz/unb-dissertacao) do trabal
 ## Tecnologias
 
 - Terraform (Azure Provider)
+- Azure CLI
 
 ## Instruções para execução do projeto
 
@@ -94,7 +138,43 @@ Consulte o [repositório](https://github.com/yagoluiz/unb-dissertacao) do trabal
 
 > *az login*
 
-4. Na pasta **src** na raíz do projeto, executar os comandos Terraform
+4. *(Opcional)* Criar credenciais *service principal* para autenticação no Azure
+
+> *az ad sp create-for-rbac --name "{NAME}" --role contributor --scopes /subscriptions/{SEU_AZURE_SUBSCRIPTION_ID}*
+
+Resultado da criação do *service principal*:
+
+```json
+{
+  "clientId": "{AZURE_CLIENT_ID}",
+  "clientSecret": "{AZURE_CLIENT_SECRET}",
+  "subscriptionId": "{AZURE_SUBSCRIPTION_ID}",
+  "tenantId": "{AZURE_TENANT_ID}",
+  "activeDirectoryEndpointUrl": "https://login.microsoftonline.com",
+  "resourceManagerEndpointUrl": "https://management.azure.com/",
+  "activeDirectoryGraphResourceId": "https://graph.windows.net/",
+  "sqlManagementEndpointUrl": "https://management.core.windows.net:8443/",
+  "galleryEndpointUrl": "https://gallery.azure.com/",
+  "managementEndpointUrl": "https://management.core.windows.net/"
+}
+```
+
+Utilize variáveis **clientId**, **clientSecret**, **subscriptionId** e **tenantId** no provider:
+
+```terraform
+provider "azurerm" {
+  version         = ">= 2.0.0"
+  subscription_id = var.subscription_id
+  client_id       = var.client_id
+  client_secret   = var.client_secret
+  tenant_id       = var.tenant_id
+  features {}
+}
+```
+
+Neste projeto as variáveis estão no **GitHub Secrets**.
+
+5. Na pasta **src** na raíz do projeto executar os comandos Terraform desejados
 
 > *terraform init* **(iniciar modulos e provider)**
 
@@ -103,3 +183,5 @@ Consulte o [repositório](https://github.com/yagoluiz/unb-dissertacao) do trabal
 > *terraform apply* **(aplicar infraestrutura)**
 
 > *terraform destroy* **(remover infraestrutura)**
+
+Mais [comandos](https://www.terraform.io/docs/commands/index.html).

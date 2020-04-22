@@ -29,5 +29,6 @@ resource "azurerm_app_service" "docker-api" {
 
   app_settings = {
     "APPINSIGHTS_INSTRUMENTATIONKEY" = azurerm_application_insights.insights-api[each.key].instrumentation_key
+    "ASPNETCORE_ENVIRONMENT"         = "Production"
   }
 }
